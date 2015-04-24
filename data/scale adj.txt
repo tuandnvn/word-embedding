@@ -78,6 +78,15 @@ soggy
 : distance
 : softness
 : wealth
+rich
+poor
+wealthy
+opulent
+affluent
+destitute
+penurious
+moneyless
+penniless
 : wellness
 healthy
 ill
