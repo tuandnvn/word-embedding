@@ -79,4 +79,20 @@ soggy
 : softness
 : wealth
 : wellness
+healthy
+ill
+sick
+dying
+diseased
+infected
+injured
+bruised
+handicapped
+disabled
+paralyzed
+comatose
+sturdy
+deceased
+dead
+moribund
 : emotion
