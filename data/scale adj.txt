@@ -105,3 +105,10 @@ deceased
 dead
 moribund
 : emotion
+angry
+happy
+calm
+sad
+anxious
+furious
+bored
