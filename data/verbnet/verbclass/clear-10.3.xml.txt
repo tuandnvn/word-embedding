@@ -1,0 +1,5 @@
+clean
+hollow
+clear
+drain
+empty

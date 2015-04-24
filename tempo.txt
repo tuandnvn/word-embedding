@@ -1,0 +1,103 @@
+raze-v	refurbish-v	0.457348888935
+raze-v	gut-v	0.460157564581
+raze-v	construct-v	0.462068847951
+raze-v	bulldoze-v	0.473695798746
+raze-v	destroy-v	0.48495068469
+raze-v	torch-v	0.537274441106
+raze-v	remodel-v	0.560165603728
+raze-v	renovate-v	0.62017395967
+raze-v	demolish-v	0.74184926023
+
+demolish-v	roof-v	0.547792441146
+demolish-v	prefabricate-v	0.551862490954
+demolish-v	torch-v	0.563133332089
+demolish-v	build-v	0.573061612303
+demolish-v	construct-v	0.607079611222
+demolish-v	erect-v	0.611876296637
+demolish-v	refurbish-v	0.655623797327
+demolish-v	remodel-v	0.691332803901
+demolish-v	raze-v	0.74184926023
+demolish-v	renovate-v	0.811670528525
+
+erect-v	vandalise-v	0.374861073134
+erect-v	refurbish-v	0.399196585294
+erect-v	remodel-v	0.416019661065
+erect-v	raze-v	0.438365286229
+erect-v	dismantle-v	0.43941008404
+erect-v	site-v	0.440055262794
+erect-v	renovate-v	0.495171605832
+erect-v	build-v	0.527134627712
+erect-v	construct-v	0.552620109779
+erect-v	demolish-v	0.611876296637
+
+
+erect-v	sq-n	0.263069751172
+erect-v	height-n	0.265226170612
+erect-v	steel-n	0.271523495124
+erect-v	buildings-n	0.274743594237
+erect-v	ft-n	0.277112982472
+erect-v	facade-n	0.280187509396
+erect-v	foot-n	0.280750137025
+erect-v	removal-n	0.289308795441
+erect-v	tent-n	0.291411859584
+erect-v	Construction-n	0.293061857453
+erect-v	statue-n	0.303557449295
+erect-v	wall-n	0.304370600566
+erect-v	permission-n	0.31065851348
+erect-v	variance-n	0.318227101441
+erect-v	structures-n	0.32530941758
+erect-v	walls-n	0.331252597482
+erect-v	concrete-n	0.350645504139
+erect-v	building-n	0.362961787551
+erect-v	installation-n	0.37205044642
+erect-v	construction-n	0.38732248705
+erect-v	towers-n	0.425258562193
+
+
+sell-v	the-a	0.0138975173451
+sell-v	an-a	0.0556631240923
+sell-v	few-a	0.0978864869422
+sell-v	one-a	0.106785395248
+sell-v	some-a	0.137494416059
+
+buy-v	the-a	0.0527772911017
+buy-v	few-a	0.101628931827
+buy-v	an-a	0.108503935764
+buy-v	some-a	0.136392293395
+buy-v	one-a	0.15579650591
+
+reopen-v	an-a	-0.0294241846724
+reopen-v	one-a	0.00924998514502
+reopen-v	few-a	0.0742710277236
+reopen-v	some-a	0.08343697033
+reopen-v	the-a	0.107413171512
+
+open-v	an-a	0.0128527419132
+open-v	some-a	0.0782842868044
+open-v	few-a	0.087105503778
+open-v	one-a	0.156631992751
+open-v	the-a	0.232528610176
+
+close-v	an-a	0.135996350607
+close-v	some-a	0.140238348269
+close-v	few-a	0.145247668062
+close-v	one-a	0.218592088184
+close-v	the-a	0.271279849665
+
+erect-v	an-a	0.0193216522887
+erect-v	some-a	0.0267145573713
+erect-v	few-a	0.0670496756731
+erect-v	one-a	0.075835217146
+erect-v	the-a	0.0893788550638
+
+demolish-v	an-a	0.0340612168857
+demolish-v	some-a	0.0419250267166
+demolish-v	few-a	0.0438552530435
+demolish-v	one-a	0.0728219828377
+demolish-v	the-a	0.11426096851
+
+raze-v	an-a	0.00320239529902
+raze-v	few-a	0.0315007097995
+raze-v	one-a	0.0512867282308
+raze-v	some-a	0.0515738753133
+raze-v	the-a	0.0738305896364

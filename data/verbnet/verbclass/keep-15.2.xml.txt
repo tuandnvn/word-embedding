@@ -1,0 +1,6 @@
+hoard
+keep
+leave
+store
+stock
+stockpile

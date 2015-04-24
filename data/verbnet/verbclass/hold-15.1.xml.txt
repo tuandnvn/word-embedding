@@ -1,0 +1,13 @@
+clasp
+clutch
+grab
+grasp
+grip
+handle
+hold
+pull
+push
+seize
+tug
+wield
+yank

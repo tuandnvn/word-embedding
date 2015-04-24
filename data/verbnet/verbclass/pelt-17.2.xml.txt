@@ -1,0 +1,7 @@
+bombard
+buffet
+pelt
+pepperspray
+shell
+shower
+stone

@@ -1,0 +1,5 @@
+ask
+enquire
+inquire
+consult
+pry

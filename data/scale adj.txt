@@ -1,0 +1,82 @@
+: size
+large
+small
+tiny
+little
+big
+huge
+gigantic
+tremendous
+enormous
+immense
+colossal
+mammoth
+gargantuan
+vast
+minute
+wee
+dwarf
+meager
+microscopic
+diminutive
+petite
+infinitesimal
+: temperature
+frozen
+cold
+icy
+arctic
+cool
+frosty
+chilly
+frigid
+warm
+hot
+boiling
+mild
+balmy
+scorching
+lukewarm
+: weight
+skeletal
+bony
+skinny
+fat
+chubby
+thin
+obese
+slim
+slender
+bulky
+overweighted
+emaciated
+: brightness
+dark
+dim
+murky
+shady
+shadowy
+bright
+sunny
+lucid
+: humidity
+wet
+dry
+moist
+damp
+soaked
+humid
+arid
+torrid
+desiccated
+dehydrated
+parched
+watery
+soggy
+: sound
+: length
+: distance
+: softness
+: wealth
+: wellness
+: emotion

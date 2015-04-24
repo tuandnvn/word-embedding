@@ -1,0 +1,7 @@
+move
+scoot
+bounce
+dart
+float
+roll
+slide

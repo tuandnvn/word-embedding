@@ -1,0 +1,12 @@
+sum
+add
+tally
+count
+multiply
+divide
+deduct
+factor_out
+interpolate
+extrapolate
+subtract
+average

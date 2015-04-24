@@ -1,0 +1,8 @@
+acquaint
+inform
+apprise
+notify
+advise
+update
+remind
+tell

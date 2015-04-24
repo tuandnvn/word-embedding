@@ -1,0 +1,11 @@
+rely
+depend
+bank
+bargain
+count
+figure
+reckon
+bet
+gamble
+take_a_chance
+wager

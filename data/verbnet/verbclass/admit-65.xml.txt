@@ -1,0 +1,6 @@
+admit
+allow
+exclude
+include
+permit
+welcome

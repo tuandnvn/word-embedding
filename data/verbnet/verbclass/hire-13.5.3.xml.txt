@@ -1,0 +1,13 @@
+hire
+recruit
+employ
+contract
+engage
+take
+sign
+sign_on
+sign_up
+subcontract
+train
+enlist
+reinstate

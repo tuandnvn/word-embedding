@@ -1,0 +1,12 @@
+analyze
+appraise
+assess
+audit
+evaluate
+go_over
+review
+scrutinize
+analyse
+assay
+proofread
+study

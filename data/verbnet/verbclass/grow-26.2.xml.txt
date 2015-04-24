@@ -1,0 +1,8 @@
+develop
+evolve
+generate
+grow
+hatch
+maturate
+mature
+redevelop

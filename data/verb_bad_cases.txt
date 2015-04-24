@@ -1,0 +1,128 @@
+-------------------------
+pardon
+Antonyms [u'punish', u'condemn', u'unforgive', u'convict']
+Synonyms [u'excuse', u'forgive', u'exonerate', u'absolve']
+[u'excuse', u'absolve', u'condemn', u'punish', u'forgive', u'exonerate']
+2 0.833333333333
+4 3.26666666667
+0.416666666667 0.816666666667 ADV 0.583333333333 0.691666666667 NOUN same
+-------------------------
+amalgamate
+Antonyms [u'parse', u'exclude', u'distill', u'separate']
+Synonyms [u'consolidate', u'mingle', u'equal', u'unite', u'combine', u'aggregate', u'join', u'blend']
+[u'mingle', u'aggregate', u'exclude', u'join', u'blend', u'unite', u'distill', u'separate', u'combine', u'consolidate']
+3 0.994047619048
+7 5.75
+0.331349206349 0.821428571429 ADV 0.369444444444 0.78537414966 NOUN 0.633333333333 0.639965986395
+-------------------------
+kill
+Antonyms [u'create', u'revive', u'reanimate', u'birth', u'save', u'heal']
+Synonyms [u'terminate', u'murder', u'end', u'obliterate', u'slay']
+[u'end', u'create', u'heal', u'revive', u'terminate', u'save', u'reanimate', u'murder', u'obliterate', u'slay']
+5 3.29761904762
+5 2.71944444444
+0.659523809524 0.543888888889 ADV 0.81 0.421031746032 NOUN 0.69619047619 0.497222222222
+-------------------------
+implicate
+Antonyms [u'clear', u'extricate', u'untangle', u'simplify', u'exclude', u'save', u'defend', u'exonerate']
+Synonyms [u'associate', u'assume', u'suggest', u'involve', u'imply', u'accuse']
+[u'save', u'assume', u'clear', u'suggest', u'involve', u'imply', u'associate', u'exclude', u'defend', u'accuse', u'exonerate']
+5 2.94065656566
+6 3.58095238095
+0.588131313131 0.596825396825 ADV 0.788888888889 0.481980519481 NOUN 0.525194805195 0.637037037037
+-------------------------
+document
+Antonyms [u'ignore', u'forget', u'write', u'speech', u'disprove', u'retract', u'delete']
+Synonyms [u'record', u'scribe', u'declare', u'certificate']
+[u'retract', u'record', u'declare', u'disprove', u'scribe', u'write', u'delete']
+4 2.57142857143
+3 1.76666666667
+0.642857142857 0.588888888889 ADV 0.492857142857 0.805555555556 NOUN same
+-------------------------
+nose
+Antonyms [u'ignore', u'stomp', u'speed', u'snoop']
+Synonyms [u'poke', u'sniff', u'snoop', u'inquire', u'dig', u'neb', u'sidle', u'investigate']
+[u'inquire', u'investigate', u'speed', u'dig', u'snoop', u'snoop', u'sidle', u'stomp', u'poke', u'sniff']
+4 1.73333333333
+8 6.81825396825
+0.433333333333 0.852281746032 ADV 0.590277777778 0.822767857143 NOUN 0.469444444444 0.86443452381
+-------------------------
+export
+Antonyms [u'import']
+Synonyms [u'ship', u'offshore', u'send', u'trade']
+[u'send', u'ship', u'trade', u'import']
+1 0.25
+3 3.0
+0.25 1.0 ADV same NOUN same
+-------------------------
+critique
+Antonyms [u'ignore', u'guess', u'accept', u'praise']
+Synonyms [u'comment', u'evaluate', u'review', u'assess', u'judge', u'study']
+[u'judge', u'study', u'accept', u'review', u'evaluate', u'assess', u'guess', u'comment', u'praise']
+3 0.952380952381
+6 5.13333333333
+0.31746031746 0.855555555556 ADV 0.388888888889 0.788492063492 NOUN 0.458333333333 0.719047619048
+-------------------------
+sum
+Antonyms [u'parse', u'subtract', u'divide', u'detract', u'deconstruct']
+Synonyms [u'add', u'total', u'conclude']
+[u'conclude', u'divide', u'deconstruct', u'add', u'subtract', u'total']
+3 1.76666666667
+3 2.0
+0.588888888889 0.666666666667 ADV 0.833333333333 0.477777777778 NOUN 0.722222222222 0.533333333333
+-------------------------
+rub
+Antonyms [u'soothe', u'scratch', u'pat', u'dull', u'annoy']
+Synonyms [u'pressure', u'stroke', u'caress', u'abrade', u'massage', u'buff']
+[u'pressure', u'stroke', u'annoy', u'soothe', u'dull', u'buff', u'caress', u'massage', u'pat', u'abrade', u'scratch']
+5 2.33232323232
+6 4.29642857143
+0.466464646465 0.716071428571 ADV 0.653333333333 0.532708032708 NOUN 0.426825396825 0.785353535354
+-------------------------
+spiral
+Antonyms [u'flatten', u'straighten', u'uncurl']
+Synonyms [u'twist', u'cascade', u'spin', u'wind']
+[u'straighten', u'twist', u'spin', u'wind', u'flatten', u'cascade']
+2 1.4
+4 2.58333333333
+0.7 0.645833333333 ADV 0.366666666667 0.854166666667 NOUN 0.45 0.770833333333
+-------------------------
+replicate
+Antonyms [u'originalize', u'customize', u'halve', u'invent', u'differentiate', u'destroy', u'individualize']
+Synonyms [u'reproduce', u'duplicate', u'copy']
+[u'copy', u'destroy', u'halve', u'invent', u'reproduce', u'differentiate', u'duplicate']
+4 2.58333333333
+3 1.82857142857
+0.645833333333 0.609523809524 ADV 0.645833333333 0.609523809524 NOUN 0.770833333333 0.442857142857
+-------------------------
+park
+Antonyms [u'ride', u'drive']
+Synonyms [u'insert', u'settle', u'stop', u'leave', u'cuddle', u'place', u'store']
+[u'insert', u'settle', u'stop', u'cuddle', u'place', u'leave', u'drive', u'ride', u'store']
+2 0.392857142857
+7 6.77777777778
+0.196428571429 0.968253968254 ADV 0.196428571429 0.968253968254 NOUN 0.236111111111 0.909353741497
+-------------------------
+arrive
+Antonyms [u'leave', u'depart']
+Synonyms [u'come', u'arrive', u'reach', u'enter', u'land']
+[u'land', u'reach', u'come', u'leave', u'enter', u'depart', u'arrive']
+2 0.583333333333
+5 4.51428571429
+0.291666666667 0.902857142857 ADV same NOUN 0.266666666667 0.942857142857
+-------------------------
+whisper
+Antonyms [u'shout', u'yell']
+Synonyms [u'report', u'breathe', u'rustle', u'murmur']
+[u'report', u'breathe', u'rustle', u'yell', u'shout', u'murmur']
+2 0.65
+4 3.66666666667
+0.325 0.916666666667 ADV same NOUN same
+-------------------------
+contaminate
+Antonyms [u'sterilize', u'decontaminate', u'purity', u'clean', u'purify']
+Synonyms [u'pollute', u'infect', u'ruin', u'taint', u'poison', u'despoil', u'dirty', u'spoil']
+[u'dirty', u'clean', u'despoil', u'decontaminate', u'purify', u'taint', u'infect', u'sterilize', u'poison', u'spoil', u'ruin', u'pollute']
+4 2.1
+8 5.19668109668
+0.525 0.649585137085 ADV 0.360416666667 0.779247835498 NOUN 0.257178932179 0.942708333333

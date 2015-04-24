@@ -1,0 +1,13 @@
+alert
+assure
+brief
+educate
+encourage
+inform
+notify
+admonish
+advise
+caution
+counsel
+instruct
+warn

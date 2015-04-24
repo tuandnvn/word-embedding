@@ -1,0 +1,6 @@
+echo
+resonate
+resound
+reverberate
+roll
+sound

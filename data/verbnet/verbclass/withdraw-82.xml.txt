@@ -1,0 +1,12 @@
+back_out
+chicken_out
+get_out
+wriggle_out
+bow_out
+pull_out
+get_away
+back_off
+withdraw
+retreat
+pull_away
+retire

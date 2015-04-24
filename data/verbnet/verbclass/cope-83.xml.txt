@@ -1,0 +1,6 @@
+deal
+cope
+manage
+grapple
+get_by
+get_through

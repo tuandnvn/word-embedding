@@ -1,0 +1,9 @@
+bolt
+gobble
+wolf
+gulp
+guzzle
+quaff
+slug
+swallow
+swig

@@ -1,0 +1,14 @@
+cruise
+drive
+fly
+navigate
+oar
+paddle
+pedal
+rally
+ride
+row
+sail
+tack
+voyage
+wing

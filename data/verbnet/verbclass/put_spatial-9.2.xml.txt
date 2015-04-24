@@ -1,0 +1,11 @@
+lay
+prop
+underlay
+dangle
+hang
+lean
+perch
+rest
+sit
+stand
+suspend

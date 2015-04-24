@@ -1,0 +1,7 @@
+dig
+jab
+pierce
+poke
+prick
+stab
+stick

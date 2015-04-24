@@ -1,0 +1,12 @@
+reason
+reason_out
+conclude
+derive
+disprove
+infer
+deduct
+deduce
+gather
+conceive
+prove
+rationalize

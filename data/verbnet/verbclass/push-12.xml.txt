@@ -1,0 +1,12 @@
+heave
+jerk
+pull
+tug
+yank
+jostle
+nudge
+press
+push
+shove
+squeeze
+thrust

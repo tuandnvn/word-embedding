@@ -1,0 +1,8 @@
+omit
+neglect
+fail
+forego
+forgo
+flub
+overleap
+manage

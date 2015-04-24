@@ -1,0 +1,11 @@
+wag
+beckon
+blink
+clap
+gesture
+nod
+point
+shrug
+squint
+wave
+wink

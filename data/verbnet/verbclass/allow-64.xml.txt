@@ -1,0 +1,5 @@
+allow
+approve
+permit
+sanction
+tolerate

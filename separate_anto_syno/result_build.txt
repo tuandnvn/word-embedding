@@ -1,0 +1,81 @@
+['destroy', 'dismantle', 'demolish', 'raze', 'tear', 'dislodge', 'topple', 'disintegrate', \
+                          'crumble', 'deconstruct', 'eliminate', 'eradicate']
+
+
+original:
+[('disintegrate', 0.005), ('topple', 0.01), ('crumble', 0.01), ('dislodge', 0.02), ('destroy', 0.025), ('eliminate', 0.035), ('eradicate', 0.035), ('tear', 0.04), ('thrive', 0.065), ('deconstruct', 0.065), ('design', 0.07), ('fabricate', 0.075), ('dismantle', 0.085), ('carve', 0.09), ('reassemble', 0.09), ('unite', 0.1), ('organize', 0.105), ('project', 0.11), ('evolve', 0.11), ('widen', 0.115), ('demolish', 0.12), ('formulate', 0.125), ('grow', 0.125), ('raze', 0.125), ('boost', 0.135), ('erect', 0.155), ('sustain', 0.155), ('install', 0.16), ('extend', 0.16), ('enlarge', 0.16), ('accelerate', 0.16), ('preserve', 0.16), ('generate', 0.165), ('assemble', 0.17), ('incorporate', 0.17), ('integrate', 0.18), ('redevelop', 0.18), ('produce', 0.185), ('fortify', 0.19), ('forge', 0.195), ('improve', 0.195), ('enhance', 0.2), ('strengthen', 0.2), ('maintain', 0.2), ('cultivate', 0.205), ('create', 0.21), ('augment', 0.22), ('establish', 0.225), ('consolidate', 0.225), ('rebuild', 0.225), ('upgrade', 0.235), ('expand', 0.245), ('develop', 0.26), ('construct', 0.28)]
+
+
+sum_index with similarity
+[('tear', 0.002769485156381465), ('crumble', 0.003099246245076622), ('disintegrate', 0.003350470782059449), ('topple', 0.0042232229781985165), ('design', 0.0043782956049451096), ('project', 0.0047696048627750365), ('dislodge', 0.004940932791398593), ('destroy', 0.00552266084981587), ('fabricate', 0.006226766517116706), ('eradicate', 0.006622140749766532), ('thrive', 0.006655691968463357), ('carve', 0.006928787864800501), ('eliminate', 0.007649244216281799), ('dismantle', 0.007752897375931706), ('reassemble', 0.007914796625059882), ('deconstruct', 0.008005336415339952), ('raze', 0.008035228793661323), ('demolish', 0.008123029660238429), ('erect', 0.008185650083280979), ('grow', 0.008798239442004542), ('install', 0.009457151540072551), ('unite', 0.009909827773446093), ('widen', 0.009999475362268846), ('evolve', 0.010480058350922304), ('assemble', 0.010815874402691106), ('enlarge', 0.010853075839137588), ('upgrade', 0.01093761913475309), ('redevelop', 0.011043773482727382), ('organize', 0.011121076408252844), ('produce', 0.011270812442172656), ('preserve', 0.01157895345484112), ('generate', 0.01176642475207678), ('boost', 0.011793387182345193), ('sustain', 0.011800436201898202), ('extend', 0.011852820054115854), ('accelerate', 0.01266436763163516), ('formulate', 0.012690877068922518), ('forge', 0.012750192322655729), ('construct', 0.013236420449275223), ('cultivate', 0.013240304760501078), ('fortify', 0.013418143420452342), ('rebuild', 0.013584135286996465), ('maintain', 0.013680346004414775), ('create', 0.014472730056239174), ('incorporate', 0.01470742938058016), ('improve', 0.015002159986150553), ('integrate', 0.015033706050313523), ('augment', 0.015107984784587759), ('consolidate', 0.015812940440661827), ('enhance', 0.016212890787345755), ('establish', 0.016395351936289975), ('strengthen', 0.016841872552023934), ('expand', 0.017433167453482917), ('develop', 0.018044199179477704)]
+
+
+sum_index without similarity
+[('crumble', 0.01733799999999941), ('disintegrate', 0.018355499999999303), ('tear', 0.0200434999999994), ('topple', 0.02414249999999918), ('destroy', 0.027265499999998867), ('dislodge', 0.028385499999998797), ('design', 0.037060499999999004), ('eradicate', 0.038384499999998545), ('thrive', 0.03946949999999816), ('fabricate', 0.04037349999999782), ('project', 0.042216499999998464), ('eliminate', 0.043440999999998696), ('deconstruct', 0.043472499999997874), ('carve', 0.04423599999999801), ('dismantle', 0.04508449999999827), ('demolish', 0.0489824999999984), ('reassemble', 0.04991449999999812), ('raze', 0.050496499999998654), ('grow', 0.05178299999999804), ('erect', 0.05212749999999833), ('unite', 0.05817799999999773), ('install', 0.05826949999999804), ('evolve', 0.05944299999999768), ('widen', 0.06183499999999749), ('assemble', 0.06468499999999783), ('sustain', 0.0673264999999979), ('produce', 0.06753349999999787), ('boost', 0.06775699999999779), ('generate', 0.06784099999999756), ('preserve', 0.06793799999999778), ('organize', 0.06895849999999797), ('enlarge', 0.06931199999999778), ('extend', 0.07058699999999794), ('redevelop', 0.07144649999999839), ('formulate', 0.07157249999999804), ('accelerate', 0.07204549999999786), ('cultivate', 0.07419049999999747), ('maintain', 0.07594399999999815), ('forge', 0.07597299999999815), ('fortify', 0.07627499999999737), ('construct', 0.07706199999999819), ('rebuild', 0.07713899999999811), ('create', 0.07759899999999767), ('upgrade', 0.07852049999999848), ('incorporate', 0.07899949999999849), ('improve', 0.08137899999999793), ('integrate', 0.08158249999999835), ('enhance', 0.08263449999999804), ('strengthen', 0.08340349999999823), ('augment', 0.08382249999999858), ('establish', 0.08682899999999892), ('consolidate', 0.08777549999999901), ('expand', 0.09166299999999959), ('develop', 0.09196549999999938)]
+
+============================================
+synnonym_candidates = ['purchase']
+antonym_candidates = ['sell']
+ 
+original:
+[('purchase', 0.25), ('sell', 0.35)]
+
+sum_index without similarity
+[('purchase', 0.05722999999999923), ('sell', 0.05947499999999863)]
+
+sum_index with similarity
+[('purchase', 0.007845322585035636), ('sell', 0.009402546590706943)]
+
+============================================
+target_verb = 'reveal'
+synonym_candidates = ['disclose', 'tell', 'announce', 'publish', 'broadcast', 'leak',\
+                       'communicate', 'proclaim', 'divulge', \
+                       'show', 'display', 'bare', 'exhibit',\
+                        'manifest']
+antonym_candidates = ['hide', 'conceal', 'cover', 'screen', 'disguise',\
+                       'obscure', 'camouflage', 'mask', 'suppress', 'veil']
+                       
+original:
+[('leak', 0.0), ('screen', 0.005), ('bare', 0.015), ('mask', 0.015), ('veil', 0.015), ('camouflage', 0.035), ('suppress', 0.04), ('broadcast', 0.045), ('disguise', 0.045), ('communicate', 0.06), ('exhibit', 0.06), ('display', 0.065), ('proclaim', 0.07), ('cover', 0.07), ('hide', 0.08), ('announce', 0.085), ('manifest', 0.085), ('obscure', 0.095), ('conceal', 0.1), ('publish', 0.105), ('show', 0.155), ('tell', 0.175), ('disclose', 0.225), ('divulge', 0.245)]
+
+sum_index without similarity
+[('bare', 0.006996500000000107), ('leak', 0.007283000000000105), ('veil', 0.008362000000000055), ('mask', 0.009365000000000007), ('screen', 0.011885000000000022), ('camouflage', 0.014239999999999864), ('broadcast', 0.022368999999999088), ('display', 0.025028499999999145), ('exhibit', 0.027325999999999198), ('suppress', 0.03155999999999837), ('cover', 0.03189499999999875), ('disguise', 0.03282349999999819), ('hide', 0.03545099999999811), ('obscure', 0.043255999999998344), ('proclaim', 0.04409599999999795), ('manifest', 0.04455699999999832), ('announce', 0.0452514999999982), ('conceal', 0.04558849999999804), ('show', 0.04857099999999822), ('publish', 0.050931999999998416), ('communicate', 0.05351149999999815), ('divulge', 0.061659499999998216), ('tell', 0.06496549999999814), ('disclose', 0.06671649999999818)]
+
+sum_index with similarity
+[('leak', 0.0007681558738837285), ('bare', 0.0007933661755032398), ('veil', 0.0009158822241804508), ('mask', 0.0011462282113211548), ('screen', 0.001170742567127828), ('camouflage', 0.0016384296810469322), ('broadcast', 0.0019866277918954177), ('exhibit', 0.002499450843441948), ('display', 0.002607554603876467), ('cover', 0.0034882743701102953), ('disguise', 0.004448587080080803), ('obscure', 0.004905131286656555), ('suppress', 0.005098436058536945), ('manifest', 0.005352706616269779), ('hide', 0.005414551869400403), ('announce', 0.00548177012704177), ('show', 0.005656590810703378), ('proclaim', 0.007004509909301635), ('publish', 0.007091114035658485), ('conceal', 0.0071738628171732375), ('communicate', 0.008486205338253491), ('divulge', 0.008860179526252588), ('disclose', 0.010015736546458633), ('tell', 0.011251329258807428)]
+
+
+get-v	stay-v	0.452225916759
+get-v	grab-v	0.454385405774
+get-v	think-v	0.456942223858
+get-v	earn-v	0.460032486614
+get-v	guess-v	0.460715573279
+get-v	put-v	0.462319085952
+get-v	want-v	0.474063516764
+get-v	keep-v	0.474461897437
+get-v	obtain-v	0.485484395143
+get-v	see-v	0.490776141969
+get-v	know-v	0.492444693787
+get-v	make-v	0.498323427255
+get-v	receive-v	0.50504477953
+get-v	find-v	0.519186715434
+get-v	bring-v	0.553165477857
+get-v	give-v	0.579720483944
+get-v	come-v	0.581744968835
+get-v	go-v	0.589803159186
+
+achieve-v	surpass-v	0.437839509081
+achieve-v	replicate-v	0.442140512827
+achieve-v	establish-v	0.442373262045
+achieve-v	reap-v	0.443050834861
+achieve-v	elevate-v	0.445235679167
+achieve-v	develop-v	0.450022409644
+achieve-v	accelerate-v	0.452313931686
+achieve-v	succeed-v	0.460258656539
+achieve-v	implement-v	0.464038815414
+achieve-v	maintain-v	0.474355593882
+achieve-v	sustain-v	0.476104364038
+achieve-v	deliver-v	0.510695730111
+achieve-v	reach-v	0.536330117343
+achieve-v	accomplish-v	0.706179783065
+achieve-v	attain-v	0.830468248714

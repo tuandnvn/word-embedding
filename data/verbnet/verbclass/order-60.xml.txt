@@ -1,0 +1,13 @@
+allow
+beseech
+call
+hail
+invite
+okay
+permit
+summon
+ask
+command
+demand
+order
+require

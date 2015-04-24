@@ -1,0 +1,6 @@
+annul
+quash
+void
+avoid
+invalidate
+nullify

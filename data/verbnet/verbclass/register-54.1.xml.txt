@@ -1,0 +1,8 @@
+clock
+time
+mistime
+measure
+read
+register
+total
+weigh
