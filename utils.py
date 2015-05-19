@@ -105,3 +105,6 @@ CAPITAL_COMMON_COUNTRIES = 'capital-common-countries'
 
 SCALE_ADJ = os.path.join(DATA_DIR, 'scale adj.txt')
 ORDERED_SCALE_ADJ = os.path.join(DATA_DIR, 'scale_adj_order.txt')
+
+ADDTIONAL_RELATION = os.path.join(DATA_DIR, 'other_relations.txt')
+ADDTIONAL_ANALOGY_QUESTION_FILE = os.path.join(DATA_DIR, 'additional_questions.txt')

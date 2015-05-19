@@ -56,9 +56,6 @@ class GoogleData(object):
         self.word_list = []
         
         with open(self.data_file, "rb") as filehandler:
-#             self.no_of_words = struct.unpack("ll",filehandler.read(8))
-#             self.dim = struct.unpack("ll",filehandler.read(8))
-            
             tempo = ''
             char = filehandler.read(1)
             while ord(char) != 32:
@@ -77,8 +74,8 @@ class GoogleData(object):
             print self.dim
             
             counter = 0
-            for _ in xrange(self.words):
-#             for _ in xrange(300000):
+#             for _ in xrange(self.words):
+            for _ in xrange(300000):
                 tempo = ''
                 while True:
                     char = filehandler.read(1)
@@ -273,7 +270,7 @@ if __name__ == '__main__':
 #     google.filter(GoogleData.keep_word_in_file(NOUNS), word_dict)
 #     google.save_to_file(GOOGLE_NOUN_VECTOR_FILE)
 #     print google.produce_words([LENCI_HYPONYMS, LENCI_HYPERNYMS])
-    google.produce_ranks(google.produce_words([LENCI_HYPONYMS, LENCI_HYPERNYMS]), LENCI_WORD_RANKS)
+#     google.produce_ranks(google.produce_words([LENCI_HYPONYMS, LENCI_HYPERNYMS]), LENCI_WORD_RANKS)
 
 #     google.filter(GoogleData.keep_word_in_file(ADJECTIVES))
 #     google.save_to_file(GOOGLE_ADJECTIVE_VECTOR_FILE)

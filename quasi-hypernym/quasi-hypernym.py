@@ -112,6 +112,7 @@ if __name__ == '__main__':
         
         for semantic_type in words:
             print semantic_type
+            print words[semantic_type]
             t.triple_calculate(words[semantic_type])
             
     triple_adj()
