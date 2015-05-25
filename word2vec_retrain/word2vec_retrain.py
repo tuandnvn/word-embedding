@@ -68,9 +68,6 @@ import pyximport
 from six import iteritems, itervalues, string_types
 
 from six.moves import xrange
-pyximport.install(setup_args={"script_args":["--compiler=mingw32"], 'include_dirs': [get_include(), os.path.dirname(models.__file__)]}, reload_support=True )
-from word2vec_bf_retrain_inner import train_sentence_sg, FAST_VERSION
-
 
 try:
     from queue import Queue
@@ -80,7 +77,7 @@ except ImportError:
 logger = logging.getLogger("gensim.models.word2vec")
 
 
-class Word2Vec_BF_Retrain(Word2Vec):
+class Word2Vec_Retrain(Word2Vec):
     def __init__(self, initiate_model, prototypes, sentences=None, size=100, alpha=0.005, window=5, min_count=5,
         sample=0, seed=1, workers=1, min_alpha=0.0001, negative=5, hashfxn=hash, iter=1 
         ):
@@ -266,7 +263,6 @@ class Word2Vec_BF_Retrain(Word2Vec):
             if cut_out < len(self.margins[target_word]):
                 self.margin_alpha[target_word] = self.margins[target_word][cut_out]
         
-        tempo = []
         for target_index in target_indexes:
             average_vector = numpy.zeros(self.layer1_size)
             '''Inflection'''
@@ -281,12 +277,7 @@ class Word2Vec_BF_Retrain(Word2Vec):
                     continue
                 word_index = sentence[index].index
                 
-                if index == target_index:
-                    average_vector += self.syn0[word_index]
-                if index < target_index:
-                    average_vector[:self.layer1_size/2] += self.syn0[word_index][self.layer1_size/2:] 
-                if index > target_index:
-                    average_vector[self.layer1_size/2:] += self.syn0[word_index][:self.layer1_size/2]
+                average_vector += self.syn0[word_index]
             
 #             values = [(p, average_vector.dot(self.prototypes[target_word][p])) for p in self.prototypes[target_word].keys() ]
             values = [(p, average_vector.dot(self.syn0prime_normalized[self.prototype_vocab[target_word + '-' + p].index])) for p in self.prototypes[target_word].keys() if target_word + '-' + p in self.prototype_vocab]
@@ -302,8 +293,6 @@ class Word2Vec_BF_Retrain(Word2Vec):
 #                     if target_word in ['copy', 'sleep', 'appear']:
 #                         print [self.index2word[sentence[i].index] for i in xrange(target_index - 5, target_index + 5) if i >= 0 and i < len(sentence)]
 #                         print combined_word
-# #                     sentence[target_index] = self.prototype_vocab[combined_word]
-# #                     tempo.append(target_index)
             
             '''Select best choice if the second choice is much inferior to the best choice'''
             
@@ -323,29 +312,7 @@ class Word2Vec_BF_Retrain(Word2Vec):
                     self.syn0prime[self.prototype_vocab[combined_word].index] +=  average_vector / numpy.linalg.norm(average_vector)
                     
                     self.no_of_learnt_samples[target_word] += 1
-#                     if target_word in ['appear']:
-#                     print [self.index2word[sentence[i].index] for i in xrange(target_index - 5, target_index + 5) if i >= 0 and i < len(sentence)]
-#                     print combined_word
                       
-                    '''Train with cython'''
-#                     sentence[target_index] = self.prototype_vocab[combined_word]
-#                     tempo.append(target_index)
-        
-        '''Train with cython'''
-#         target_indexes = numpy.array(tempo)
-#         train_sentence_sg(self, sentence, target_indexes, alpha, work)
-        
-#         print target_indexes
-#         t = [sentence[i].index for i in target_indexes]
-#         print t[:10]
-
-#         t = [self.prototype_index2word[sentence[i].index] for i in target_indexes]
-#         print t[:20]
-
-#         target_indexes = numpy.array([6])
-#         print 'Outhere %f' % self.syn0prime[2310][0]
-#         print 'Outhere %f' % self.syn0prime[2310][0]
-#         return u
         return result
 # Example: ./word2vec.py ~/workspace/word2vec/text8 ~/workspace/word2vec/questions-words.txt ./text8
 if __name__ == "__main__":

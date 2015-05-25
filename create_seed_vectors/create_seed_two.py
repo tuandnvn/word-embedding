@@ -12,7 +12,8 @@ import numpy
 
 from create_seed_vectors import WORD2VEC_POS, PATTERN_SPLIT_FILE, \
     WORD2VEC_POS_BF, PROTOTYPE_POS_BF, PROTOTYPE_POS_BF_AFTER_RETRAIN, \
-    SEED_VECTOR_2_FILE
+    SEED_VECTOR_2_FILE, WORD2VEC_POS_INCOR_50K, WORD2VEC_POS_BF_50K, \
+    WORD2VEC_POS_INCOR
 from create_seed_vectors.create_seed import Seed_Vector, PATTERN, IMPLICATURE, \
     EXAMPLES, LEFT, TARGET, RIGHT, parse_sentence
 
@@ -22,14 +23,14 @@ class Seed_Vector_Two(Seed_Vector):
     classdocs
     '''
 
-    def __init__(self, vector_file, pattern_sample_file, window_size, vector_binary = True ):
+    def __init__(self, vector_file, pattern_sample_file, window_size, vector_binary = True, margin = 1.0 ):
         '''
         two_component_vector_file:
         A file in the same format as word2vec vector
         
         pattern_sample_file:
         '''
-        Seed_Vector.__init__(self, vector_file, pattern_sample_file, window_size, vector_binary)
+        Seed_Vector.__init__(self, vector_file, pattern_sample_file, window_size, vector_binary, margin)
     
     def _process_sentence(self, target_word, sentence):
         '''
@@ -55,11 +56,11 @@ class Seed_Vector_Two(Seed_Vector):
                 continue
             word = parsed[index]
             if word in self.vector_data:
-                if index == target_index:
-                    average_vector += self.vector_data[word]
-                if index < target_index:
+#                 if index == target_index:
+#                     average_vector += self.vector_data[word]
+                if index <= target_index:
                     average_vector[:self.dim/2] += self.vector_data[word][self.dim/2:] 
-                if index > target_index:
+                if index >= target_index:
                     average_vector[self.dim/2:] += self.vector_data[word][:self.dim/2]
                     
         return average_vector/ numpy.linalg.norm(average_vector)
@@ -68,6 +69,8 @@ if __name__ == '__main__':
     if not os.path.exists(SEED_VECTOR_2_FILE):
         print 'Creating Seed_Vector_Two model'
         t = Seed_Vector_Two(WORD2VEC_POS_BF, PATTERN_SPLIT_FILE, 5, True)
+#         t = Seed_Vector_Two(WORD2VEC_POS_INCOR_50K, PATTERN_SPLIT_FILE, 5, True)
+#         t = Seed_Vector_Two(WORD2VEC_POS_INCOR, PATTERN_SPLIT_FILE, 5, True)
         t.read_pattern()
     #     t.baseline_pattern()
         
@@ -77,7 +80,18 @@ if __name__ == '__main__':
     else:
         print 'Unpickle Seed_Vector_Two model'
         t = utils.unpickle(SEED_VECTOR_2_FILE)
+    
+#     t.generate_random_prototypes()
+#     t.create_pattern_prototypes()
+    
+#     print t.vector_data['the-dt'][:10]
+#     print t.vector_data['in-in'][:10]
+#     print t.vector_data['animal-n'][:10]
 #     t.save_prototypes(PROTOTYPE_POS_BF)
+#     t.load_prototypes(PROTOTYPE_POS_BF_AFTER_RETRAIN)
 #     t.test_pattern_prototypes()
-    t.load_prototypes(PROTOTYPE_POS_BF_AFTER_RETRAIN)
-    t.test_pattern_prototypes()
+
+    for method in ['micro', 'macro', 'weighted']:
+        print '===================================================================='
+        print 'Test SG-NS-BF F1 for %s' % method
+        t.test_pattern_prototypes(average=method)
