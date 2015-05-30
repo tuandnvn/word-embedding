@@ -7,6 +7,7 @@ from _collections import defaultdict
 import codecs
 import json
 import os
+import re
 import struct
 import sys
 
@@ -17,9 +18,11 @@ import numpy
 from sklearn.metrics import f1_score, precision_score, recall_score, confusion_matrix
 from spacy.en import English
 
+from bnc.util import process_sentence
 from create_seed_vectors import REMOVING_STRS, TRAIN, TEST, WORD2VEC_POS, \
     PATTERN_SPLIT_FILE, WORD2VEC_POS_BF, SEED_VECTOR_FILE, \
-    PROTOTYPE_POS, PROTOTYPE_POS_AFTER_RETRAIN
+    PROTOTYPE_POS, PROTOTYPE_POS_AFTER_RETRAIN, WORD2VEC_VOCAB, \
+    PATTERN_SPLIT_FILE_EXTEND
 
 
 # 'pattNum' - the pattern number (as a string)
@@ -47,8 +50,15 @@ ADVERBIALS = 'adverbials'
 
 nlp = English()
 
+DEBUG_MODE = True
+DEBUG_VERBS = ['plant'] 
+
+def clear_digits(s):
+    return re.sub('\\$?-?[0-9]+(\\,[0-9]+)*(\\.[0-9]+)*', 'number', s)
+    
 def parse_sentence(sentence):
     result = []
+    sentence = process_sentence(clear_digits(sentence))
     pos_results = nlp(sentence)
     for token_struct in pos_results:
         token, pos = token_struct.orth_, token_struct.tag_
@@ -81,7 +91,7 @@ def f_score_two_labels(y_true, y_pred, average='weighted'):
         for i in xrange(len(y_true)):
             if y_true[i] == y_pred[i]:
                 count += 1
-        return float(count)/ len(y_true)
+        return float(count) / len(y_true)
     if average == 'macro':
         labels = set(y_true)
         t_score = 0
@@ -99,12 +109,14 @@ def f_score_two_labels(y_true, y_pred, average='weighted'):
             t_score += label_count[label] * f1_score(y_true, y_pred, pos_label=int(label))
         t_score /= len(y_true)
         return t_score
+    
+    
 class Seed_Vector(object):
     '''
     classdocs
     '''
 
-    def __init__(self, vector_file, pattern_sample_file, window_size, vector_binary = True, margin = 1.0 ):
+    def __init__(self, vector_file, pattern_sample_file, window_size, vector_binary=True, margin=1.0):
         '''
         two_component_vector_file:
         A file in the same format as word2vec vector
@@ -116,6 +128,18 @@ class Seed_Vector(object):
         self.window_size = window_size
         self.vector_binary = vector_binary
         self.margin = margin
+        self.read_vocab()
+        
+    def read_vocab(self):
+        counter = 0
+        self.vocab = {}
+        with codecs.open(WORD2VEC_VOCAB, "r", 'utf-8') as filehandler:
+            for line in filehandler:
+                counter += 1
+                if counter > 100:
+                    word, freq = line.strip().split()
+                    self.vocab[word] = freq
+        
     
     def test_pattern_prototypes(self, average='weighted'):
         print 'Test pattern prototypes'
@@ -123,8 +147,13 @@ class Seed_Vector(object):
         weights = []
         
         counter = 0
-#         for target_word in ['appear']:
-        for target_word in self.pattern_data[TEST]:
+        
+        if DEBUG_MODE:
+            target_words = DEBUG_VERBS
+        else:
+            target_words = self.pattern_data[TRAIN]
+            
+        for target_word in target_words:
 #             if counter > 3:
 #                 break
             counter += 1
@@ -144,11 +173,12 @@ class Seed_Vector(object):
                 
             for pattern in self.pattern_data[TEST][target_word]:
                 pattern_no, examples = (pattern[PATTERN_NUMBER], pattern[EXAMPLES])
+                
                 for example in examples:
                     sentence = ' '.join([example[LEFT], example[TARGET], example[RIGHT]])
-                    average_vector = self._process_sentence(example[TARGET], sentence)
+                    average_vector = self._process_sentence(example[TARGET], sentence, self.window_size)
                     values = [(p, average_vector.dot(self.normalized_prototypes[target_word][p])) for p in self.prototypes[target_word].keys()]
-                    values = sorted( values, key=lambda x : x[1] )
+                    values = sorted(values, key=lambda x : x[1])
                     best = values[-1][0]
                     
                     best_value = values[-1][1]
@@ -157,9 +187,24 @@ class Seed_Vector(object):
                     if 'margin' not in self.__dict__:
                         self.margin = 1.0
                     
-                    if best_value / second_best_value > self.margin:
+                    if best_value != 0:
                         y_true.append(int(pattern_no))
                         y_pred.append(int(best))
+#                     if second_best_value == 0 or best_value / second_best_value > self.margin:
+#                         y_true.append(int(pattern_no))
+#                         y_pred.append(int(best))
+#                         
+                    elif best_value == 0:
+                        average_vector = self._process_sentence(example[TARGET], sentence, 2 * self.window_size)
+                        values = [(p, average_vector.dot(self.normalized_prototypes[target_word][p])) for p in self.prototypes[target_word].keys()]
+                        values = sorted(values, key=lambda x : x[1])
+                        best = values[-1][0]
+                        y_true.append(int(pattern_no))
+                        y_pred.append(int(best))
+                    
+                    if DEBUG_MODE:
+                        print '-- Example is of pattern %s, classified as %s' % (pattern_no, best)
+                            
                 weight += len(examples)
             
             score = None
@@ -173,10 +218,36 @@ class Seed_Vector(object):
                 weights.append(weight)
                 
                 print '---------'
-                print ','.join(['%3d' %t for t in y_true])
-                print ','.join(['%3d' %t for t in y_pred])
+                print ','.join(['%3d' % t for t in y_true])
+                print ','.join(['%3d' % t for t in y_pred])
                 print 'Target word: %s ; F1 = %f' % (target_word, score)
-            
+                
+                labels = sorted(list(set(y_true).union(set(y_pred))))
+                print 'Labels  %s' % labels
+                t = numpy.array(confusion_matrix(y_true, y_pred, labels), dtype=float)
+                print 'Confusion matrix '
+                print t
+                '''Normalize by row'''
+                t_row = (t.transpose() / numpy.sum(t, axis=1)).transpose()
+                print t_row
+
+                
+                di = numpy.diag_indices(len(labels))
+                t_row[di] = 0
+                t[di] = 0
+
+                raw_max = numpy.unravel_index(numpy.argmax(t), (len(labels), len(labels)))
+                row_max = numpy.unravel_index(numpy.argmax(t_row), (len(labels), len(labels)))
+
+                print 'Most confused based on unnormalized; between pattern %s and pattern %s' % (labels[raw_max[0]], labels[raw_max[1]])
+                print 'Most confused based on row; between pattern %s and pattern %s' % (labels[row_max[0]], labels[row_max[1]])
+#                 '''Normalize by column'''
+#                 t_col = t / numpy.sum(t, axis = 0)
+#                 print t_col
+#                 t_col[di] = 0
+#                 col_max = numpy.unravel_index(numpy.argmax(t_col),  (len(labels), len(labels)) )
+#                 print 'Most confused based on col; between pattern %s and pattern %s' % (labels[col_max[0]], labels[col_max[1]])
+
         print 'Average unweighted score %f' % (numpy.average (scores))
         print 'Average weighted score %f' % (numpy.average (scores, weights=weights))
     
@@ -233,6 +304,7 @@ class Seed_Vector(object):
         self.create_pattern_prototypes()
         
     def read_pattern(self):
+        print 'Read pattern file'
         with open(self.pattern_sample_file, "r") as filehandler:
             self.pattern_data = json.load(filehandler)
                         
@@ -242,7 +314,12 @@ class Seed_Vector(object):
         self.normalized_prototypes = {}
         
         counter = 0
-        for target_word in self.pattern_data[TRAIN]:
+        if DEBUG_MODE:
+            target_words = DEBUG_VERBS
+        else:
+            target_words = self.pattern_data[TRAIN]
+            
+        for target_word in target_words:
             counter += 1
             print 'Create prototype for %s' % target_word
             self.prototypes[target_word] = {}
@@ -251,6 +328,8 @@ class Seed_Vector(object):
             for pattern in self.pattern_data[TRAIN][target_word]:
                 pattern_form, pattern_no, examples = (pattern[PATTERN],
                             pattern[PATTERN_NUMBER], pattern[EXAMPLES])
+                if DEBUG_MODE:
+                    print '=== Create prototype for pattern %s' % pattern_no
                 
                 average_vector = numpy.zeros(self.dim)
                 
@@ -260,19 +339,23 @@ class Seed_Vector(object):
                 p = p.lower()
                 
                 '''Give 1/5 of all example weight to pattern'''
-                average_vector += float(len(examples))/5 * self._process_sentence(target_word + 's', p)
+                average_vector += float(len(examples)) / 5 * self._process_sentence(target_word + 's', p, self.window_size)
                 
                 for example in examples:
                     sentence = ' '.join([example[LEFT], example[TARGET], example[RIGHT]])
-                    average_vector += self._process_sentence(example[TARGET], sentence)
+                    average_vector += self._process_sentence(example[TARGET], sentence, self.window_size)
                 
                 '''Unnormalized prototype'''
                 self.prototypes[target_word][pattern_no] = average_vector
                 
                 norm = numpy.linalg.norm(average_vector)
                 if norm != 0:
-                    self.normalized_prototypes[target_word][pattern_no] = average_vector/ norm
-    
+                    self.normalized_prototypes[target_word][pattern_no] = average_vector / norm
+                
+                if DEBUG_MODE:
+                    print 'Prototype %s' % pattern_no
+                    print self.normalized_prototypes[target_word][pattern_no][:10]
+                    
     def save_prototypes(self, file_name):
         prototype_copy = {}
         for target_word in self.prototypes:
@@ -294,9 +377,9 @@ class Seed_Vector(object):
                 
             for pattern_no in prototype_copy[target_word]:
                 self.prototypes[target_word][pattern_no] = numpy.array(prototype_copy[target_word][pattern_no])
-                self.normalized_prototypes[target_word][pattern_no] =  self.prototypes[target_word][pattern_no]/ numpy.linalg.norm(self.prototypes[target_word][pattern_no])
+                self.normalized_prototypes[target_word][pattern_no] = self.prototypes[target_word][pattern_no] / numpy.linalg.norm(self.prototypes[target_word][pattern_no])
         
-    def _process_sentence(self, target_word, sentence):
+    def _process_sentence(self, target_word, sentence, window_size):
         '''
         Call from read_pattern_file
         '''
@@ -311,18 +394,29 @@ class Seed_Vector(object):
                 target_index = index
                 break
         
+        for index, token_w_pos in enumerate(parsed):    
+            if token_w_pos == target_word + '-n' or token_w_pos == target_word + '-j':
+                target_index = index
+                break
+            
         average_vector = numpy.zeros(self.dim)
         if target_index == -1:
             return average_vector
         
-        for index in xrange(target_index - self.window_size, target_index + self.window_size + 1):
+        for index in xrange(target_index - window_size, target_index + window_size + 1):
             if index < 0 or index >= len(parsed):
                 continue
             word = parsed[index]
+            
             if word in self.vector_data:
                 average_vector += self.vector_data[word]
                 
-        return average_vector/ numpy.linalg.norm(average_vector)
+        if DEBUG_MODE:
+            print sentence
+            print [parsed[index] for index in xrange(target_index - window_size,\
+                                                      target_index + window_size + 1) if index >= 0 and index < len(parsed) and parsed[index] in self.vector_data]
+                
+        return average_vector / numpy.linalg.norm(average_vector)
     
     def read_vector_file(self):
         if self.vector_binary:
@@ -344,40 +438,6 @@ class Seed_Vector(object):
                     word = values[0]
                     t = numpy.array(values)
                     self.vector_data[word] = t / numpy.linalg.norm(t)
-    
-    def print_train_statistics(self):
-        print 'Training statistics'
-        
-        total_target = len(self.pattern_data[TRAIN].keys())
-        total_pattern = 0
-        total_examples = 0
-        for target_word in self.pattern_data[TRAIN]:
-            examples = 0
-            for pattern in self.pattern_data[TRAIN][target_word]:
-                _, example = (pattern[PATTERN_NUMBER], pattern[EXAMPLES])
-                examples += len(example)
-            total_examples += examples
-            total_pattern += len(self.pattern_data[TRAIN][target_word])
-            
-            print 'Target = %s; pattern = %s; examples = %s ' % (target_word, len(self.pattern_data[TRAIN][target_word]), examples)
-            
-        print 'Total target = %s; total pattern = %s; total examples = %s ' % (total_target, total_pattern, total_examples)
-    def print_test_statistics(self):
-        print 'Testing statistics'
-        
-        total_target = len(self.pattern_data[TEST].keys())
-        total_pattern = 0
-        total_examples = 0
-        for target_word in self.pattern_data[TEST]:
-            examples = 0
-            for pattern in self.pattern_data[TEST][target_word]:
-                _, example = (pattern[PATTERN_NUMBER], pattern[EXAMPLES])
-                examples += len(example)
-            total_examples += examples
-            total_pattern += len(self.pattern_data[TRAIN][target_word])
-                
-            print 'Target = %s; pattern = %s; examples = %s ' % (target_word, len(self.pattern_data[TEST][target_word]), examples)
-        print 'Total target = %s; total pattern = %s; total examples = %s ' % (total_target, total_pattern, total_examples)
     
     def _read_raw_file(self):
         print 'Read raw file'
@@ -433,9 +493,12 @@ class Seed_Vector(object):
                     vector[a] = struct.unpack("f", filehandler.read(4))[0]
                 
                 t = numpy.array(vector)
-                self.vector_data[word] = t/ numpy.linalg.norm(t)
+                self.vector_data[word] = t / numpy.linalg.norm(t)
                 
 if __name__ == '__main__':
+#     print clear_digits('Def 147,234.234 Abc')
+#     print clear_digits('d a $175 million plan to plant 1,000 million trees')
+
 #     t = Seed_Vector(WORD2VEC_POS, PATTERN_SPLIT_FILE, 5, True)
 #     t.read_vector_file()
 #     y_true = [0,0,1,1,1]
@@ -457,35 +520,31 @@ if __name__ == '__main__':
 #     print f1_score(y_true, y_pred, average='micro')
 #     print f1_score(y_true, y_pred, average='macro')
 #     print f1_score(y_true, y_pred, average='weighted')
-
+ 
     if not os.path.exists(SEED_VECTOR_FILE):
         print 'Creating Seed_Vector model'
-        t = Seed_Vector(WORD2VEC_POS, PATTERN_SPLIT_FILE, 5, True)
+        t = Seed_Vector(WORD2VEC_POS, PATTERN_SPLIT_FILE_EXTEND, 4, True)
         t.read_pattern()
     #     t.baseline_pattern()
-          
+           
         t.read_vector_file()
         t.create_pattern_prototypes()
         utils.pickle(t, SEED_VECTOR_FILE)
     else:
         print 'Unpickle Seed_Vector model'
         t = utils.unpickle(SEED_VECTOR_FILE)
-    
-#     t.generate_random_prototypes()
-#     t.create_pattern_prototypes()
-    
+     
+#     t.print_train_statistics()
+#     t.print_test_statistics()
+     
 # #     t.save_prototypes(PROTOTYPE_POS)
 # #     t.load_prototypes(PROTOTYPE_POS_AFTER_RETRAIN)
     for method in ['micro', 'macro', 'weighted']:
-#         print '===================================================================='
-#         print 'Test Baseline F1 for %s' % method
-#         t.baseline_pattern(average=method)
         print '===================================================================='
         print 'Test SG-NS F1 for %s' % method
         t.test_pattern_prototypes(average=method)
         print '===================================================================='
-
+ 
 #     for pattern in t.pattern_data[TRAIN]['call']:
 #         no, examples, p = (pattern[PATTERN_NUMBER], pattern[EXAMPLES], pattern[PATTERN])
 #         print '%s %s' % (no , p)
-        

@@ -19,7 +19,7 @@ from bnc import BNC_DIR
 from bnc.bnc_process import get_w_and_c_in
 from bnc.util import process_document, process_sentence
 from create_seed_vectors import TEST, TRAIN, PATTERN_FILE, PATTERN_PICKLE_FILE, \
-    PATTERN_SPLIT_FILE, PATTERN_FILE_NEW
+    PATTERN_SPLIT_FILE, PATTERN_FILE_EXTEND
 from create_seed_vectors.create_seed import PATTERN_NUMBER, EXAMPLES, REF, LEFT, \
     TARGET, RIGHT, FULL_EXAMPLE
 
@@ -112,50 +112,53 @@ class Process_For_Full_Text(object):
             _, examples = (pattern[PATTERN_NUMBER], pattern[EXAMPLES])
             pattern[FULL_EXAMPLE] = []
             for example in examples:
-                ref = example[REF]
-                
-                '''If document is not yet processed'''
-                if process_doc:
-                    document = process_document(self.data[ref])
-                else:
-                    document = self.data[ref]
-                
-                sentence = ' '.join([example[LEFT], example[TARGET], example[RIGHT]])
-                sentence = process_sentence(sentence)
-                index = document.find(sentence)
-                
-                file_handler.write(ref)
-                file_handler.write('\n')
-                file_handler.write(sentence)
-                file_handler.write('\n')
-                
-                if index == -1:
-                    file_handler.write('Problem finding document for full sentence, back to substring\n')
-                    short_left = ' '.join(example[LEFT].split()[-3:])
-                    short_right = ' '.join(example[RIGHT].split()[:3])
-                    sentence = ' '.join([short_left, example[TARGET], short_right])
+                try:
+                    ref = example[REF]
+                    
+                    '''If document is not yet processed'''
+                    if process_doc:
+                        document = process_document(self.data[ref])
+                    else:
+                        document = self.data[ref]
+                    
+                    sentence = ' '.join([example[LEFT], example[TARGET], example[RIGHT]])
                     sentence = process_sentence(sentence)
                     index = document.find(sentence)
+                    
+                    file_handler.write(ref)
+                    file_handler.write('\n')
+                    file_handler.write(sentence)
+                    file_handler.write('\n')
+                    
                     if index == -1:
-                        file_handler.write('Problem finding document for full sentence, back to target string only\n')
-                        sentence = process_sentence(example[TARGET])
+                        file_handler.write('Problem finding document for full sentence, back to substring\n')
+                        short_left = ' '.join(example[LEFT].split()[-3:])
+                        short_right = ' '.join(example[RIGHT].split()[:3])
+                        sentence = ' '.join([short_left, example[TARGET], short_right])
+                        sentence = process_sentence(sentence)
                         index = document.find(sentence)
                         if index == -1:
-                            print 'Example not found!'
-                            file_handler.write('No way to find the example in the document\n')
-                            file_handler.write('===============================================================\n')
-                            continue
-                    
-                if index != -1:
-                    l = document[:index].rfind('.')
-                    r = document[index + len(sentence):].find('.') + index + len(sentence)
-                    extract = document[l + 1 : r]
-                    file_handler.write ('============Extract============\n')
-                    file_handler.write (extract)
-                    file_handler.write ('\n')
-                    pattern[FULL_EXAMPLE].append(extract)
-                else:
+                            file_handler.write('Problem finding document for full sentence, back to target string only\n')
+                            sentence = process_sentence(example[TARGET])
+                            index = document.find(sentence)
+                            if index == -1:
+                                print 'Example not found!'
+                                file_handler.write('No way to find the example in the document\n')
+                                file_handler.write('===============================================================\n')
+                    if index != -1:
+                        l = document[:index].rfind('.')
+                        r = document[index + len(sentence):].find('.') + index + len(sentence)
+                        extract = document[l + 1 : r]
+                        file_handler.write ('============Extract============\n')
+                        file_handler.write (extract)
+                        file_handler.write ('\n')
+                        pattern[FULL_EXAMPLE].append(extract)
+                    else:
+                        pattern[FULL_EXAMPLE].append('')
+                except:
                     pattern[FULL_EXAMPLE].append('')
+            if len(pattern[FULL_EXAMPLE]) != len(examples):
+                print '======================Big problem======================='
                 
                     
     def process_pattern_to_get_full(self, is_split = False, process_doc = False):
@@ -189,13 +192,14 @@ if __name__ == '__main__':
     else:
         print 'Load Pickle file for pattern data'
         t = utils.unpickle(PATTERN_PICKLE_FILE)
-         
+        
+    '''Process all documents first'''
 #     t.read_pattern(PATTERN_FILE)
 #     t.preprocess_bnc()
 #     utils.pickle(t, PATTERN_PICKLE_FILE)
     
-    t.process_pattern_to_get_full( process_doc = False)
-    t.save_pattern(PATTERN_FILE_NEW)
+    t.process_pattern_to_get_full(process_doc = False)
+    t.save_pattern(PATTERN_FILE_EXTEND)
     
 #     xml_file = os.path.join(BNC_DIR, 'C' , 'CG', 'CGE.xml')
 #     print xml_file

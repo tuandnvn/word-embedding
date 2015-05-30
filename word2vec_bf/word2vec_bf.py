@@ -62,7 +62,6 @@ import pyximport
 from six import iteritems, itervalues, string_types
 
 from six.moves import xrange
-
 pyximport.install(setup_args={"script_args":["--compiler=mingw32"], 'include_dirs': [get_include(), os.path.dirname(models.__file__)]}, reload_support=True )
 from word2vec_bf_inner import train_sentence_sg, FAST_VERSION
 
