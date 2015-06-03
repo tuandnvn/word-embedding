@@ -5,7 +5,7 @@ Created on Mar 12, 2015
 '''
 import codecs
 
-from utils import ADVERBS
+from util import ADVERBS
 
 
 words = []

@@ -7,7 +7,7 @@ import json
 
 from nltk.corpus import framenet
 
-from utils import VERB_SVD_FILENAME, FRAMENET_VERB_VECTOR, FRAMENET_VERB_CLASS
+from util import VERB_SVD_FILENAME, FRAMENET_VERB_VECTOR, FRAMENET_VERB_CLASS
 from preprocess.verbset import Verbset
 
 

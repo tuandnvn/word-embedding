@@ -196,7 +196,7 @@ if __name__ == '__main__':
     '''Process all documents first'''
 #     t.read_pattern(PATTERN_FILE)
 #     t.preprocess_bnc()
-#     utils.pickle(t, PATTERN_PICKLE_FILE)
+#     util.pickle(t, PATTERN_PICKLE_FILE)
     
     t.process_pattern_to_get_full(process_doc = False)
     t.save_pattern(PATTERN_FILE_EXTEND)

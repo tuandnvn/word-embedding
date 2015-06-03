@@ -6,7 +6,7 @@ Created on Mar 3, 2015
 import codecs
 import json
 
-from utils import VERB_SVD_FILENAME, TYPEDM_VERB_VECTOR_FILE, \
+from util import VERB_SVD_FILENAME, TYPEDM_VERB_VECTOR_FILE, \
     ADJECTIVE_SVD_FILENAME, TYPEDM_ADJECTIVE_VECTOR_FILE
 
 

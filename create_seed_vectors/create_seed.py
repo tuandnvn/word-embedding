@@ -20,8 +20,7 @@ from spacy.en import English
 
 from bnc.util import process_sentence
 from create_seed_vectors import REMOVING_STRS, TRAIN, TEST, WORD2VEC_POS, \
-    PATTERN_SPLIT_FILE, WORD2VEC_POS_BF, SEED_VECTOR_FILE, \
-    PROTOTYPE_POS, PROTOTYPE_POS_AFTER_RETRAIN, WORD2VEC_VOCAB, \
+    SEED_VECTOR_FILE, WORD2VEC_VOCAB, \
     PATTERN_SPLIT_FILE_EXTEND
 
 

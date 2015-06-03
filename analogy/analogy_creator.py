@@ -5,7 +5,7 @@ Created on Apr 28, 2015
 '''
 import codecs
 
-from utils import ADDTIONAL_RELATION, ADDTIONAL_ANALOGY_QUESTION_FILE
+from util import ADDTIONAL_RELATION, ADDTIONAL_ANALOGY_QUESTION_FILE
 
 class AnalogyCreator(object):
     '''

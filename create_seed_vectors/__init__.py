@@ -22,6 +22,7 @@ WORD2VEC_POS_MODEL = os.path.join(GOOGLE_DIR, 'trunk', 'w2v_all_pos_f_200000')
 WORD2VEC_POS = os.path.join(GOOGLE_DIR, 'trunk', 'word2vec_all_pos_f_200000.mo')
 WORD2VEC_VOCAB = os.path.join(GOOGLE_DIR, 'trunk', 'vocab_all.f_300k.txt')
 WORD2VEC_POS_BF = os.path.join(GOOGLE_DIR, 'trunk', 'word2vec_bf_all_pos_f_200000.mo')
+WORD2VEC_POS_BF_MODEL = os.path.join(GOOGLE_DIR, 'trunk', 'w2v_bf_all_pos_f_200000')
 WORD2VEC_POS_BF_50K = os.path.join(GOOGLE_DIR, 'trunk', 'word2vec_bf_50000_pos_f_200000.mo')
 WORD2VEC_POS_INCOR_50K = os.path.join(GOOGLE_DIR, 'trunk', 'word2vec_incor_50000_pos_f_200000.mo')
 WORD2VEC_POS_INCOR = os.path.join(GOOGLE_DIR, 'trunk', 'word2vec_incor_all_pos_f_200000.mo')
@@ -33,6 +34,15 @@ PROTOTYPE_POS_AFTER_RETRAIN = os.path.join(PDEV_DIR, 'prototype.out.pos.json')
 
 SEED_VECTOR_FILE = os.path.join(PDEV_DIR, 'seed_vector.obj')
 SEED_VECTOR_2_FILE = os.path.join(PDEV_DIR, 'seed_vector_2.obj')
-SEED_VECTOR_FILE_BF = os.path.join(PDEV_DIR, 'seed_vector_bf.obj')
+SEED_VECTOR_FILE_NN = os.path.join(PDEV_DIR, 'seed_vector_nn.obj')
+SEED_VECTOR_FILE_NN_BF = os.path.join(PDEV_DIR, 'seed_vector_nn_bf.obj')
 SEED_VECTOR_FILE_EXTEND = os.path.join(PDEV_DIR, 'seed_vector_extend.obj')
 SEED_VECTOR_2_FILE_EXTEND = os.path.join(PDEV_DIR, 'seed_vector_2_extend.obj')
+
+DEPENDENCY_FILE = os.path.join(PDEV_DIR, 'dep.json')
+
+COREFERENCE = 'coreference'
+DEPENDENCY = 'dependency'
+TEXT = 'text'
+TOKENS = 'tokens'
+TREE = 'tree'

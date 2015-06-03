@@ -7,7 +7,7 @@ from _collections import defaultdict
 
 import numpy
 
-from utils import WORD, RANKS, RANDOM_N, MERO, HYPER, COORD
+from util import WORD, RANKS, RANDOM_N, MERO, HYPER, COORD
 
 
 class Average_Precision(object):

@@ -102,4 +102,4 @@ if __name__ == '__main__':
         model.update_prototype_to_current()
         model.save_prototype_text('2.txt')
         model.save_prototype(output_prototype_file)
-#         utils.pickle(model, word2vec_model_file)
+#         util.pickle(model, word2vec_model_file)

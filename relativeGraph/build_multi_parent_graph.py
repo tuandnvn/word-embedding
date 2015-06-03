@@ -7,7 +7,7 @@ import sys
 
 import numpy
 
-from utils import TYPEDM_VERB_SIMILAR_JSON
+from util import TYPEDM_VERB_SIMILAR_JSON
 from relativeGraph.build_graph import BuildGraph
 from relativeGraph.graph import Edge
 

@@ -5,7 +5,7 @@ Created on Mar 5, 2015
 '''
 import sys
 
-from utils import TYPEDM_VERB_SIMILAR_JSON, GOOGLE_VERB_SIMILAR_JSON
+from util import TYPEDM_VERB_SIMILAR_JSON, GOOGLE_VERB_SIMILAR_JSON
 from relativeGraph.build_graph import BuildGraph
 from relativeGraph.build_relative_graph import BuildRelativeGraph
 from relativeGraph.graph import Edge

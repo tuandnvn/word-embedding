@@ -106,9 +106,9 @@ class BNC(object):
     def process_to_file(self, output_file):
         all_xml_files = glob.glob(self.directory + '/*/*/*.xml')
         
-        max_doc = 1000
+        max_doc = len(all_xml_files)
         print len(all_xml_files)
-        no_of_thread = 6
+        no_of_thread = 16
         step = int(max_doc / (no_of_thread - 1))
         threads = []
         

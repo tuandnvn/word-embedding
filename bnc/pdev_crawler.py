@@ -12,7 +12,7 @@ from pyreadline.logger import file_handler
 from create_seed_vectors import PATTERN_FILE
 from create_seed_vectors.create_seed import RIGHT, TARGET, LEFT, REF, \
     PATTERN_NUMBER, PATTERN, IMPLICATURE, EXAMPLES, PERCENTAGE
-from utils import DATA_DIR
+from util import DATA_DIR
 
 
 RAWDICT_DIR = os.path.join(DATA_DIR, "raw_dicts")

@@ -7,7 +7,7 @@ import codecs
 import glob
 import json
 
-from utils import VERBCLASS_DIR, VERB_DICT, VERBS
+from util import VERBCLASS_DIR, VERB_DICT, VERBS
 from preprocess.verbset import Verbset
 
 

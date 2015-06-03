@@ -57,7 +57,7 @@ cdef unsigned long long fast_sentence1_sg_neg(
     const int negative, np.uint32_t *table, unsigned long long table_len,
     REAL_t *syn0, REAL_t *syn1neg, const int size, const np.uint32_t word_index,
     const np.uint32_t word2_index, const REAL_t alpha, REAL_t *work,
-    unsigned long long next_random, REAL_t * prototype) nogil:
+    unsigned long long next_random, REAL_t * prototype, const np.uint32_t before) nogil:
 
     cdef long long a
     cdef long long row1 = word2_index * size, row2
@@ -65,6 +65,7 @@ cdef unsigned long long fast_sentence1_sg_neg(
     cdef REAL_t f, g, label
     cdef np.uint32_t target_index
     cdef int d
+    cdef int halfsize = size / 2
 
     memset(work, 0, size * cython.sizeof(REAL_t))
 
@@ -81,50 +82,26 @@ cdef unsigned long long fast_sentence1_sg_neg(
  
         row2 = target_index * size
          
-        f = <REAL_t>sdot(&size, prototype, &ONE, &syn1neg[row2], &ONE)
-#         f = <REAL_t>sdot(&size, &syn0[row1], &ONE, &syn1neg[row2], &ONE)
+        if before :
+            f = <REAL_t>sdot(&halfsize, &prototype[halfsize], &ONE, &syn1neg[row2], &ONE)
+        else:
+            f = <REAL_t>sdot(&halfsize, prototype, &ONE, &syn1neg[row2 + halfsize], &ONE)
              
         if f <= -MAX_EXP or f >= MAX_EXP:
             continue
         f = EXP_TABLE[<int>((f + MAX_EXP) * (EXP_TABLE_SIZE / MAX_EXP / 2))]
         g = (label - f) * alpha
-         
-        saxpy(&size, &g, &syn1neg[row2], &ONE, work, &ONE)
-    
-#     row2 = word_index * size
-#     
-#     f = <REAL_t>sdot(&size, prototype, &ONE, &syn1neg[row2], &ONE)
-#     if f > -MAX_EXP and f < MAX_EXP:
-#         f = EXP_TABLE[<int>((f + MAX_EXP) * (EXP_TABLE_SIZE / MAX_EXP / 2))]
-#         g = (ONEF - f) * alpha
-#         saxpy(&size, &g, &syn1neg[row2], &ONE, work, &ONE)
-    
-    saxpy(&size, &ONEF, work, &ONE, prototype, &ONE)
-
-    return next_random
-
-cdef unsigned long long fast_sentence1_sg_neg_2(
-    const int negative, np.uint32_t *table, unsigned long long table_len,
-    REAL_t *syn0, REAL_t *syn1neg, const int size, const np.uint32_t word_index,
-    const np.uint32_t word2_index, const REAL_t alpha, REAL_t *work,
-    unsigned long long next_random, REAL_t * prototype) nogil:
-
-    cdef long long a
-    cdef long long row1 = word2_index * size, row2 = word_index * size
-    cdef unsigned long long modulo = 281474976710655ULL
-    cdef REAL_t f, g, label
-    cdef np.uint32_t target_index
-    cdef int d
-
-    memset(work, 0, size * cython.sizeof(REAL_t))
-
-    f = <REAL_t>sdot(&size, &syn0[row1], &ONE, &syn1neg[row2], &ONE)
-    if f > -MAX_EXP and f < MAX_EXP:
-        f = EXP_TABLE[<int>((f + MAX_EXP) * (EXP_TABLE_SIZE / MAX_EXP / 2))]
-        g = (ONEF - f) * alpha
         
-        saxpy(&size, &g, &syn0[row1], &ONE, prototype, &ONE)
-        
+        if before :
+            saxpy(&halfsize, &g, &syn1neg[row2], &ONE, work, &ONE)
+        else:
+            saxpy(&halfsize, &g, &syn1neg[row2 + halfsize], &ONE, work, &ONE)
+             
+    if before :
+        saxpy(&halfsize, &ONEF, work, &ONE, &prototype[halfsize], &ONE)
+    else:
+        saxpy(&halfsize, &ONEF, work, &ONE, prototype, &ONE)
+
     return next_random
 
 def train_sentence_sg(model, sentence, alpha, _work, _target_index, _window, _syn0_proto, _syn1neg_proto) :
@@ -162,6 +139,8 @@ def train_sentence_sg(model, sentence, alpha, _work, _target_index, _window, _sy
     # convert Python structures to primitive types, so we can release the GIL
     work = <REAL_t *>np.PyArray_DATA(_work)
     sentence_len = <int>min(MAX_SENTENCE_LEN, len(sentence))
+    
+    cdef int before
 
     for i in range(sentence_len):
         word = sentence[i]
@@ -184,57 +163,14 @@ def train_sentence_sg(model, sentence, alpha, _work, _target_index, _window, _sy
             for j in range(j, k):
                 if j == target_index or codelens[j] == 0:
                     continue
-                
-                next_random = fast_sentence1_sg_neg(negative, table, table_len, syn0, syn1neg, size, indexes[j], indexes[target_index], _alpha, work, next_random, syn0_proto)
-#                 next_random = fast_sentence1_sg_neg_2(negative, table, table_len, syn0, syn1neg, size, indexes[target_index], indexes[j], _alpha, work, next_random, syn1neg_proto)
+                if j < target_index:
+                    before = 1
+                else:
+                    before = 0
+                next_random = fast_sentence1_sg_neg(negative, table, table_len, syn0, syn1neg, size, indexes[j], indexes[target_index], _alpha, work, next_random, syn0_proto, before)
 
     return result
 
-def test_score(model, sentence, _target_index, _window, _syn0_proto) :
-    cdef int target_index = _target_index
-    cdef int codelens[MAX_SENTENCE_LEN]
-    cdef int window = _window
-    cdef REAL_t *syn0_proto = <REAL_t *>(np.PyArray_DATA(_syn0_proto))
-    cdef REAL_t result = 0
-    cdef int size = model.layer1_size
-    cdef int row
-    cdef int counter = 0
-    cdef int sentence_len = <int>min(MAX_SENTENCE_LEN, len(sentence))
-    cdef np.uint32_t indexes[MAX_SENTENCE_LEN]
-    cdef REAL_t *syn1neg = <REAL_t *>(np.PyArray_DATA(model.syn1neg))
-    cdef REAL_t f
-    
-    for i in range(sentence_len):
-        word = sentence[i]
-        if word is None:
-            codelens[i] = 0
-        else:
-            indexes[i] = word.index
-            codelens[i] = 1
-
-    with nogil:
-        if codelens[target_index] != 0:
-            j = target_index - window
-            if j < 0:
-                j = 0
-            k = target_index + window + 1 
-            if k > sentence_len:
-                k = sentence_len
-            for j in range(j, k):
-                if j == target_index or codelens[j] == 0:
-                    continue
-                
-                row = size * indexes[j]
-                f = <REAL_t>sdot(&size, syn0_proto, &ONE, &syn1neg[row], &ONE)
-                
-                if f > -MAX_EXP and f < MAX_EXP:
-                    counter += 1
-                    result += EXP_TABLE[<int>((f + MAX_EXP) * (EXP_TABLE_SIZE / MAX_EXP / 2))]
-    
-    if counter != 0:         
-        return result / counter
-    return 0
-    
 def init():
     """
     Precompute function `sigmoid(x) = 1 / (1 + exp(-x))`, for x values discretized

@@ -12,7 +12,7 @@ import struct
 
 import numpy
 
-from utils import ANALOGY_FILE, CAPITAL_COMMON_COUNTRIES, GOOGLE_DATA_300K
+from util import ANALOGY_FILE, CAPITAL_COMMON_COUNTRIES, GOOGLE_DATA_300K
 
 class Analogy(object):
     '''

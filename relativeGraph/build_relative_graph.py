@@ -5,7 +5,7 @@ Created on Mar 3, 2015
 '''
 import sys
 
-from utils import VERB_SIMILAR_FRAMENET_ONLY_JSON, TYPEDM_VERB_SIMILAR_JSON, \
+from util import VERB_SIMILAR_FRAMENET_ONLY_JSON, TYPEDM_VERB_SIMILAR_JSON, \
     VERB_SIMILAR_FRAMENET_ONLY_JSON_SELECTED_FEATURES, GOOGLE_VERB_SIMILAR_JSON
 from relativeGraph.build_graph import BuildGraph
 from relativeGraph.graph import Node, Edge, Graph

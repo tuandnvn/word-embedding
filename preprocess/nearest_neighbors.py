@@ -7,7 +7,7 @@ from _collections import defaultdict
 import codecs
 import json
 
-from utils import NEAREST_NEIGHBOR_FILENAME, FRAMENET_VERB_CLASS, \
+from util import NEAREST_NEIGHBOR_FILENAME, FRAMENET_VERB_CLASS, \
     VERB_SIMILAR_FRAMENET_ONLY
 
 

@@ -9,7 +9,7 @@ import json
 
 import numpy
 
-from utils import FRAMENET_VERB_CLASS, FRAMENET_VERB_VECTOR, AGG_AVERAGE, \
+from util import FRAMENET_VERB_CLASS, FRAMENET_VERB_VECTOR, AGG_AVERAGE, \
     FRAMENET_SELECTED_FEATURES_VERB_VECTOR
 from cluster.word_cluster import WordCluster
 

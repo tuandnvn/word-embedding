@@ -3,7 +3,7 @@ Created on Mar 4, 2015
 
 @author: Tuan Do
 '''
-from utils import TYPEDM_VERB_SIMILAR_JSON, GOOGLE_VERB_SIMILAR_JSON
+from util import TYPEDM_VERB_SIMILAR_JSON, GOOGLE_VERB_SIMILAR_JSON
 from relativeGraph.build_graph import BuildGraph
 from relativeGraph.graph import Edge
 

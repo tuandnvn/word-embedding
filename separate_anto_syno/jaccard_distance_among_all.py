@@ -6,7 +6,7 @@ Created on Mar 11, 2015
 import codecs
 import json
 
-from utils import GOOGLE_VERB_SIMILAR_JSON, GOOGLE_VERB_NOUN_SIMILAR_JSON
+from util import GOOGLE_VERB_SIMILAR_JSON, GOOGLE_VERB_NOUN_SIMILAR_JSON
 from cluster.method.hierarchical import HierarchicalClustering
 from cluster.method.kmeans import KMeansClustering
 from relativeGraph.build_independent_graph import BuildIndependentGraph

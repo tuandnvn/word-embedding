@@ -7,7 +7,7 @@ import codecs
 
 import numpy
 
-from utils import TENSOR_FILENAME, SVD_FILENAME, NEAREST_NEIGHBOR_FILENAME, \
+from util import TENSOR_FILENAME, SVD_FILENAME, NEAREST_NEIGHBOR_FILENAME, \
     VERB_SVD_FILENAME, ADJECTIVE_SVD_FILENAME, ADJECTIVES, NOUNS
 from cluster.cluster import Cluster
 

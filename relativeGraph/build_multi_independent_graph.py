@@ -5,7 +5,7 @@ Created on Mar 6, 2015
 '''
 import numpy
 
-from utils import GOOGLE_VERB_SIMILAR_JSON
+from util import GOOGLE_VERB_SIMILAR_JSON
 from relativeGraph.build_graph import BuildGraph
 from relativeGraph.graph import Edge
 

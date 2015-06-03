@@ -12,7 +12,7 @@ from mpl_toolkits.mplot3d import Axes3D
 from numpy import linalg
 import numpy
 
-from utils import GOOGLE_VERB_VECTOR_FILE, GOOGLE_DATA_300K
+from util import GOOGLE_VERB_VECTOR_FILE, GOOGLE_DATA_300K
 import matplotlib.pyplot as plt
 from preprocess.google import GoogleData
 

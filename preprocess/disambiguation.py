@@ -7,7 +7,7 @@ from _collections import defaultdict
 import codecs
 import json
 
-from utils import FRAMENET_VERB_CLASS, FRAMENET_VERB_VECTOR
+from util import FRAMENET_VERB_CLASS, FRAMENET_VERB_VECTOR
 
 
 class Disambiguation(object):
