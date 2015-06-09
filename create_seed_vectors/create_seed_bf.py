@@ -8,7 +8,7 @@ import os
 from gensim import utils
 import numpy
 
-from create_seed_vectors import TRAIN, REMOVING_STRS, SEED_VECTOR_FILE_BF, \
+from create_seed_vectors import TRAIN, REMOVING_STRS, \
     WORD2VEC_POS, PATTERN_SPLIT_FILE, WORD2VEC_POS_BF, SEED_VECTOR_2_FILE, \
     PATTERN_SPLIT_FILE_EXTEND
 from create_seed_vectors.create_seed import Seed_Vector, PATTERN, PATTERN_NUMBER, \
@@ -30,7 +30,6 @@ class Seed_BF_Vector(Seed_Vector):
         Seed_Vector.__init__(self, vector_file, pattern_sample_file, window_size, vector_binary, margin)
     
     def _process_sentence(self, target_word, sentence, window_size):
-        
         '''
         Call from read_pattern_file
         '''
@@ -109,6 +108,6 @@ if __name__ == '__main__':
 #     for method in ['micro', 'macro', 'weighted']:
         print '===================================================================='
         print 'Test SG-NS F1 for %s' % method
-        t.test_pattern_prototypes(average=method)
+        t.test_pattern_prototypes(average=method, retest = True)
         print '===================================================================='
         

@@ -34,12 +34,15 @@ PROTOTYPE_POS_AFTER_RETRAIN = os.path.join(PDEV_DIR, 'prototype.out.pos.json')
 
 SEED_VECTOR_FILE = os.path.join(PDEV_DIR, 'seed_vector.obj')
 SEED_VECTOR_2_FILE = os.path.join(PDEV_DIR, 'seed_vector_2.obj')
+SEED_VECTOR_MMOD_FILE  = os.path.join(PDEV_DIR, 'seed_vector_mmod_bf.obj')
 SEED_VECTOR_FILE_NN = os.path.join(PDEV_DIR, 'seed_vector_nn.obj')
 SEED_VECTOR_FILE_NN_BF = os.path.join(PDEV_DIR, 'seed_vector_nn_bf.obj')
 SEED_VECTOR_FILE_EXTEND = os.path.join(PDEV_DIR, 'seed_vector_extend.obj')
 SEED_VECTOR_2_FILE_EXTEND = os.path.join(PDEV_DIR, 'seed_vector_2_extend.obj')
+SEED_VECTOR_DEP_BF_FILE  = os.path.join(PDEV_DIR, 'seed_vector_dep_bf.obj')
 
 DEPENDENCY_FILE = os.path.join(PDEV_DIR, 'dep.json')
+DEPENDENCY_FILE_CLEARNLP = os.path.join(PDEV_DIR, 'dep_clearnlp.json')
 
 COREFERENCE = 'coreference'
 DEPENDENCY = 'dependency'

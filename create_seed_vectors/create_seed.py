@@ -49,8 +49,8 @@ ADVERBIALS = 'adverbials'
 
 nlp = English()
 
-DEBUG_MODE = True
-DEBUG_VERBS = ['plant'] 
+DEBUG_MODE = False
+DEBUG_VERBS = ['allocate'] 
 
 def clear_digits(s):
     return re.sub('\\$?-?[0-9]+(\\,[0-9]+)*(\\.[0-9]+)*', 'number', s)
@@ -61,22 +61,26 @@ def parse_sentence(sentence):
     pos_results = nlp(sentence)
     for token_struct in pos_results:
         token, pos = token_struct.orth_, token_struct.tag_
-        pos = pos.lower()
-        if pos[-1:] == '$':
-            pos = pos[:-1]
-        if pos[:2] == 'jj':
-            pos = 'j'
-        if pos[:2] == 'nn':
-            pos = 'n'
-        if pos[:2] == 'vb':
-            pos = 'v'
-        if pos[:1] == 'w':
-            pos = 'w'
-        if pos[:2] == 'rb':
-            pos = 'r'
+        pos = get_brief_pos(pos)
         token = token.lower()
         result.append(token + '-' + pos)
     return result
+
+def get_brief_pos(old_pos):
+    pos = old_pos.lower()
+    if pos[-1:] == '$':
+        pos = pos[:-1]
+    if pos[:2] == 'jj':
+        pos = 'j'
+    if pos[:2] == 'nn':
+        pos = 'n'
+    if pos[:2] == 'vb':
+        pos = 'v'
+    if pos[:1] == 'w':
+        pos = 'w'
+    if pos[:2] == 'rb':
+        pos = 'r'
+    return pos
 
 def f_score_two_labels(y_true, y_pred, average='weighted'):
     '''
@@ -140,7 +144,7 @@ class Seed_Vector(object):
                     self.vocab[word] = freq
         
     
-    def test_pattern_prototypes(self, average='weighted'):
+    def test_pattern_prototypes(self, average='weighted', retest = False):
         print 'Test pattern prototypes'
         scores = []
         weights = []
@@ -151,6 +155,11 @@ class Seed_Vector(object):
             target_words = DEBUG_VERBS
         else:
             target_words = self.pattern_data[TRAIN]
+            
+        if retest:
+            data_set = TRAIN
+        else:
+            data_set = TEST
             
         for target_word in target_words:
 #             if counter > 3:
@@ -163,19 +172,19 @@ class Seed_Vector(object):
             most_frequent_no = -1
             most_frequent = 0
             
-            for pattern in self.pattern_data[TEST][target_word]:
+            for pattern in self.pattern_data[data_set][target_word]:
                 pattern_no, examples = (pattern[PATTERN_NUMBER], pattern[EXAMPLES])
                 if len(examples) > most_frequent:
                     most_frequent = len(examples)
                     most_frequent_no = pattern_no
                 weight += len(examples)
                 
-            for pattern in self.pattern_data[TEST][target_word]:
+            for pattern in self.pattern_data[data_set][target_word]:
                 pattern_no, examples = (pattern[PATTERN_NUMBER], pattern[EXAMPLES])
                 
-                for example in examples:
-                    sentence = ' '.join([example[LEFT], example[TARGET], example[RIGHT]])
-                    average_vector = self._process_sentence(example[TARGET], sentence, self.window_size)
+                for example_index, example in enumerate(examples):
+                    key = '%s_%s_%s' % (target_word, pattern_no, example_index)
+                    average_vector = self._get_average_vector_from(example, TEST, key, self.window_size)
                     values = [(p, average_vector.dot(self.normalized_prototypes[target_word][p])) for p in self.prototypes[target_word].keys()]
                     values = sorted(values, key=lambda x : x[1])
                     best = values[-1][0]
@@ -194,7 +203,7 @@ class Seed_Vector(object):
 #                         y_pred.append(int(best))
 #                         
                     elif best_value == 0:
-                        average_vector = self._process_sentence(example[TARGET], sentence, 2 * self.window_size)
+                        average_vector = self._get_average_vector_from(example, TEST, key, 2 * self.window_size)
                         values = [(p, average_vector.dot(self.normalized_prototypes[target_word][p])) for p in self.prototypes[target_word].keys()]
                         values = sorted(values, key=lambda x : x[1])
                         best = values[-1][0]
@@ -249,6 +258,10 @@ class Seed_Vector(object):
 
         print 'Average unweighted score %f' % (numpy.average (scores))
         print 'Average weighted score %f' % (numpy.average (scores, weights=weights))
+        
+    def _get_average_vector_from(self, example, data_type, key, window_size):
+        sentence = ' '.join([example[LEFT], example[TARGET], example[RIGHT]])
+        return self._process_sentence(example[TARGET], sentence, window_size)
     
     def baseline_pattern(self, average='weighted'):
         scores = []
@@ -340,9 +353,10 @@ class Seed_Vector(object):
                 '''Give 1/5 of all example weight to pattern'''
                 average_vector += float(len(examples)) / 5 * self._process_sentence(target_word + 's', p, self.window_size)
                 
-                for example in examples:
-                    sentence = ' '.join([example[LEFT], example[TARGET], example[RIGHT]])
-                    average_vector += self._process_sentence(example[TARGET], sentence, self.window_size)
+                for example_index, example in enumerate(examples):
+                    key = '%s_%s_%s' % (target_word, pattern_no, example_index)
+                    v = self._get_average_vector_from(example, TRAIN, key, self.window_size)
+                    average_vector += v
                 
                 '''Unnormalized prototype'''
                 self.prototypes[target_word][pattern_no] = average_vector
